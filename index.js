@@ -9,7 +9,7 @@ const db = mysql.createConnection(
       password: 'MooseMoose1!',
       database: 'employeetracker_db'
     },
-    console.log(`Connected to the movies_db database.`)
+    console.log('\n' + `Connected to the movies_db database.` + '\n')
   );
 
 function startMenu () {
@@ -18,8 +18,8 @@ function startMenu () {
             {
                 type: 'list',
                 name: 'startMenu',
-                message: "What would you like to do?",
-                choices: ['View All Employees', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department']
+                message: '\n' + '\n' + "What would you like to do?",
+                choices: ['View All Employees', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department', "Close Program"]
         }
     ])
         .then((userdata) => {
@@ -35,8 +35,10 @@ function startMenu () {
                 addRole()
             } else if (data == 'View All Departments') {
                 viewDepartments()
-            } else {
+            } else if (data == 'Add Department') {
                 addDepartments()
+            } else {
+                leave()
             }
 
             
@@ -110,7 +112,7 @@ function startMenu () {
                         if (updateErr) {
                             console.error('Error updating role:', updateErr);
                         } else {
-                            console.log('Updated Successfully')
+                            console.log('\n' + 'Updated Successfully' + '\n')
                             startMenu()
                         }
                     })
@@ -142,7 +144,7 @@ function startMenu () {
         }
 
         function addRole() {
-            console.log("check1")
+            // console.log("check1")
             const addRoleQuery = `SELECT * from department`;
             const addRoles = []
             db.query(addRoleQuery, (err, addroleresult) => {
@@ -180,7 +182,7 @@ function startMenu () {
                     if (err) {
                         console.error('Error inserting role:', err);
                     } else {
-                    console.log('Thank you for adding this role!')
+                    console.log('\n' + 'Thank you for adding this role!'  + '\n')
                     startMenu()
                     }
                   });
@@ -197,4 +199,10 @@ function startMenu () {
       });
     }
 
+
+
+    function leave() {
+        console.log('\n' + 'Thank you so much for using this program.  Have a great rest of your day!')
+        process.exit()
+    }
     startMenu()
